@@ -1,0 +1,66 @@
+{
+  "private": true,
+  "name": "offset",
+  "devDependencies": {
+    "@atjson/document": "0.22.2",
+    "@types/jest": "24.0.20",
+    "husky": "3.0.9",
+    "jest": "24.9.0",
+    "lerna": "3.18.3",
+    "lint-staged": "9.4.2",
+    "parcel-bundler": "1.12.4",
+    "prettier": "1.18.2",
+    "ts-jest": "24.1.0",
+    "ts-loader": "6.2.1",
+    "tslint": "5.20.0",
+    "typescript": "3.5.3"
+  },
+  "dependencies": {
+    "@atjson/editor": "file:packages/@atjson/editor",
+    "@atjson/offset-core-components": "file:packages/@atjson/offset-core-components",
+    "@atjson/offset-inspector": "file:packages/@atjson/offset-inspector"
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "publish": "lerna publish",
+    "test": "./node_modules/jest/bin/jest.js"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "warnOnly": true
+        }
+      }
+    },
+    "moduleNameMapper": {
+      "@atjson/editor": "<rootDir>/packages/@atjson/editor",
+      "@atjson/offset-core-components": "<rootDir>/packages/@atjson/offset-core-components",
+      "@atjson/offset-inspector": "<rootDir>/packages/@atjson/offset-inspector"
+    },
+    "testURL": "http://localhost",
+    "preset": "ts-jest",
+    "testMatch": [
+      "**/*-test.(ts|tsx|js|jsx)"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,css,js,jsx,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
