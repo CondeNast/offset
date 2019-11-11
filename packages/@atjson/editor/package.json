@@ -20,10 +20,10 @@
     "last 2 Chrome versions"
   ],
   "dependencies": {
-    "@atjson/hir": "0.21.4",
+    "@atjson/hir": "0.21.5",
     "@atjson/offset-core-components": "file:../offset-core-components",
-    "@atjson/renderer-commonmark": "0.21.9",
-    "@atjson/renderer-webcomponent": "0.21.4",
+    "@atjson/renderer-commonmark": "0.21.11",
+    "@atjson/renderer-webcomponent": "0.21.5",
     "@types/dom-inputevent": "^1.0.1",
     "node-sass": "^4.11.0"
   },

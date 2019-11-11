@@ -21,8 +21,8 @@
   "dependencies": {
     "@atjson/editor": "file:../editor",
     "@atjson/offset-core-components": "file:../offset-core-components",
-    "@atjson/renderer-commonmark": "0.21.9",
-    "@atjson/renderer-webcomponent": "0.21.4"
+    "@atjson/renderer-commonmark": "0.21.11",
+    "@atjson/renderer-webcomponent": "0.21.5"
   },
   "peerDependencies": {
     "@atjson/document": ">= 0.17.0 < 1"
