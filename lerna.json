@@ -1,0 +1,19 @@
+{
+  "version": "independent",
+  "packages": [
+    "packages/@offset/*"
+  ],
+  "command": {
+    "publish": {
+      "exact": true,
+      "conventionalCommits": true,
+      "changelogPreset": "@atjson/conventional-changelog-emoji"
+    },
+    "bootstrap": {
+      "hoist": true,
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    }
+  }
+}

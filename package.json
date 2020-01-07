@@ -1,0 +1,64 @@
+{
+  "private": true,
+  "name": "atjson",
+  "devDependencies": {
+    "@atjson/document": "*",
+    "@atjson/renderer-react": "*",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@tce/rush": "^0.6.4",
+    "@types/dom-inputevent": "^1.0.1",
+    "@types/expect-puppeteer": "^3.3.0",
+    "@types/jest": "^23.3.1",
+    "@types/jest-environment-puppeteer": "^2.2.1",
+    "@types/node": "^10.9.4",
+    "@types/puppeteer": "^1.10.0",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "jest": "^23.6.0",
+    "jest-puppeteer": "^3.5.1",
+    "lerna": "^3.6.0",
+    "parcel": "1.12.3",
+    "puppeteer": "^1.19.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "ts-jest": "^23.1.4",
+    "ts-loader": "^4.0.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@offset/editor": "file:packages/@offset/editor",
+    "@offset/inspector": "file:packages/@offset/inspector"
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "publish": "lerna publish",
+    "test": "./node_modules/jest/bin/jest.js"
+  },
+  "workspaces": [
+    "packages/@offset/*"
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "warnOnly": true
+        }
+      }
+    },
+    "moduleNameMapper": {
+      "^(@offset/.*)$": "<rootDir>/packages/$1/src/index.ts"
+    },
+    "testURL": "http://localhost",
+    "preset": "ts-jest",
+    "testMatch": [
+      "**/*-test.(ts|tsx|js)"
+    ]
+  }
+}
