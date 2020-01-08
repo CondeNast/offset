@@ -144,16 +144,16 @@ const Spacer = styled.div`
 `;
 
 export const Inspector: FC<{
-  document: Document;
+  children: Document;
   theme?: "light" | "dark";
 }> = props => {
   let [tab, setTab] = useState("Text");
   let [showFormattingMarks, setShowFormattingMarks] = useState(false);
   let [showParseTokens, setShowParseTokens] = useState(false);
   let [annotation, setAnnotation] = useState<Annotation<any> | null>(null);
-  let [theme, setTheme] = useState<"light" | "dark">("light");
+  let theme = useTheme();
 
-  let annotations = props.document.all();
+  let annotations = props.children.all();
 
   return (
     <ThemeProvider theme={themes[props.theme || theme]}>
@@ -176,16 +176,6 @@ export const Inspector: FC<{
               <Toggle>
                 <input
                   type="checkbox"
-                  checked={theme === "dark"}
-                  onChange={evt =>
-                    setTheme(evt.target.checked ? "dark" : "light")
-                  }
-                />
-                Dark
-              </Toggle>
-              <Toggle>
-                <input
-                  type="checkbox"
                   checked={showFormattingMarks}
                   onChange={evt => setShowFormattingMarks(evt.target.checked)}
                 />
@@ -202,7 +192,7 @@ export const Inspector: FC<{
               <Spacer></Spacer>
             </Header>
             {tab === "Preview" ? (
-              <RichPreview>{props.document}</RichPreview>
+              <RichPreview>{props.children}</RichPreview>
             ) : (
               <Markup
                 renderer={formats[tab as keyof typeof formats]}
@@ -210,14 +200,14 @@ export const Inspector: FC<{
                 showFormattingMarks={showFormattingMarks}
                 showParseTokens={showParseTokens}
               >
-                {props.document}
+                {props.children}
               </Markup>
             )}
           </Container>
           <AnnotationList
             selectedAnnotation={annotation}
             onSelect={setAnnotation}
-            onDelete={annotation => props.document.removeAnnotation(annotation)}
+            onDelete={annotation => props.children.removeAnnotation(annotation)}
             annotations={
               showParseTokens
                 ? annotations

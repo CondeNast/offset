@@ -14,15 +14,11 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <>
     <GlobalStyle />
-    <Inspector
-      document={HTMLSource.fromRaw(
-        `
-<p>Hello, world</p>
-      `.trim()
-      )
-        .convertTo(OffsetSource)
-        .canonical()}
-    />
+    <Inspector>
+      {HTMLSource.fromRaw(
+        `<p>One fish, <em>two</em> fish, red fish, <strong>blue</strong> fish</p>`
+      ).convertTo(OffsetSource)}
+    </Inspector>
   </>,
   document.querySelector("#app")
 );
