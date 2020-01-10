@@ -25,6 +25,7 @@ const Style = styled.div`
 `;
 
 export const Node: FC<{
+  showParseTokens: boolean;
   children: HIRNode;
 }> = props => {
   return (
@@ -34,9 +35,11 @@ export const Node: FC<{
       ) : (
         <details>
           <summary>{props.children.type}</summary>
-          {props.children.children().map(child => (
-            <Node>{child}</Node>
-          ))}
+          {props.children
+            .children({ includeParseTokens: props.showParseTokens })
+            .map(child => (
+              <Node showParseTokens={props.showParseTokens}>{child}</Node>
+            ))}
         </details>
       )}
     </>
@@ -45,11 +48,14 @@ export const Node: FC<{
 
 export const Tree: FC<{
   children: Document;
+  showParseTokens: boolean;
 }> = props => {
   return (
     <Style>
       <div>
-        <Node>{new HIR(props.children).rootNode}</Node>
+        <Node showParseTokens={props.showParseTokens}>
+          {new HIR(props.children).rootNode}
+        </Node>
       </div>
     </Style>
   );
