@@ -3,60 +3,102 @@ import { FC } from "react";
 import { HIR, HIRNode } from "@atjson/hir";
 import Document from "@atjson/document";
 import styled from "styled-components";
+import FormattingSource from "../Markup/source";
+import ReactRenderer from "@atjson/renderer-react";
+
+const WhiteSpace = styled.span`
+  position: relative;
+
+  &:before {
+    content: "\\000b7";
+    font-weight: bold;
+    position: absolute;
+    top: -1px;
+    left: 0px;
+    color: #999;
+  }
+`;
+
+const CarriageReturn = styled.span`
+  position: relative;
+
+  &:before {
+    content: "\\021b5";
+    font-weight: bold;
+    position: absolute;
+    top: -3px;
+    padding: 0 2px;
+    color: #999;
+  }
+`;
 
 const Style = styled.div`
   overflow-y: auto;
 
   div {
-    margin: 0 auto;
-    max-width: 700px;
-    padding: 42px 21px;
     white-space: pre-wrap;
-    line-height: 18px;
+    line-height: 20px;
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
     font-size: 12px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
 
-  details details {
-    padding-left: 1rem;
+    &:hover {
+      background: ${props => props.theme.tab.active.background};
+    }
   }
 `;
 
 export const Node: FC<{
-  showParseTokens: boolean;
   children: HIRNode;
+  depth: number;
+  showFormattingMarks: boolean;
 }> = props => {
   return (
-    <>
-      {props.children.type === "text" ? (
-        props.children.text
-      ) : (
-        <details>
-          <summary>{props.children.type}</summary>
-          {props.children
-            .children({ includeParseTokens: props.showParseTokens })
-            .map(child => (
-              <Node showParseTokens={props.showParseTokens}>{child}</Node>
-            ))}
-        </details>
-      )}
-    </>
+    <div
+      style={{
+        paddingLeft: `${props.depth + 0.5}rem`
+      }}
+    >
+      {props.children.type === "text"
+        ? props.showFormattingMarks
+          ? ReactRenderer.render(
+              FormattingSource.fromRaw(props.children.text),
+              {
+                WhiteSpace,
+                CarriageReturn
+              }
+            )
+          : props.children.text
+        : props.children.type}
+    </div>
   );
 };
+
+function hirToList(node: HIRNode, includeParseTokens: boolean, depth = 0) {
+  let result = [{ node, depth }];
+  node.children({ includeParseTokens }).map(child => {
+    result.push(...hirToList(child, includeParseTokens, depth + 1));
+  });
+  return result;
+}
 
 export const Tree: FC<{
   children: Document;
   showParseTokens: boolean;
+  showFormattingMarks: boolean;
 }> = props => {
+  let children = hirToList(
+    new HIR(props.children).rootNode,
+    props.showParseTokens
+  );
   return (
     <Style>
-      <div>
-        <Node showParseTokens={props.showParseTokens}>
-          {new HIR(props.children).rootNode}
+      {children.map(({ node, depth }) => (
+        <Node depth={depth} showFormattingMarks={props.showFormattingMarks}>
+          {node}
         </Node>
-      </div>
+      ))}
     </Style>
   );
 };

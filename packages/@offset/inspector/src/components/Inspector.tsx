@@ -198,7 +198,12 @@ export const Inspector: FC<{
             {tab === "Preview" ? (
               <RichPreview>{props.children}</RichPreview>
             ) : tab === "Tree" ? (
-              <Tree showParseTokens={showParseTokens}>{props.children}</Tree>
+              <Tree
+                showFormattingMarks={showFormattingMarks}
+                showParseTokens={showParseTokens}
+              >
+                {props.children}
+              </Tree>
             ) : (
               <Markup
                 renderer={formats[tab as keyof typeof formats]}
