@@ -32,11 +32,14 @@
     "@types/react-dom": "^16.8.5",
     "@types/styled-components": "^4.1.18",
     "node-sass": "^4.9.0",
+    "parcel": "^1.12.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7"
+    "@babel/core": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "typescript": "^3.7.4"
   }
 }
