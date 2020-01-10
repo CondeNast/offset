@@ -10,6 +10,7 @@ import CommonmarkRenderer from "@atjson/renderer-commonmark";
 import HTMLRenderer from "@atjson/renderer-html";
 import { useTheme } from "../hooks/useTheme";
 import { RichPreview } from "./RichPreview";
+import { Tree } from "./Tree";
 
 const dark = {
   color: "#A5A5A5",
@@ -171,6 +172,9 @@ export const Inspector: FC<{
                 HTML
               </Tab>
               <Tab value={tab} onChange={setTab}>
+                Tree
+              </Tab>
+              <Tab value={tab} onChange={setTab}>
                 Preview
               </Tab>
               <Toggle>
@@ -193,6 +197,8 @@ export const Inspector: FC<{
             </Header>
             {tab === "Preview" ? (
               <RichPreview>{props.children}</RichPreview>
+            ) : tab === "Tree" ? (
+              <Tree>{props.children}</Tree>
             ) : (
               <Markup
                 renderer={formats[tab as keyof typeof formats]}

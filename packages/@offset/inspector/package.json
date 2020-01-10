@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "@atjson/document": "0.22.9",
+    "@atjson/hir": "^0.21.12",
     "@atjson/renderer-commonmark": "0.21.20",
     "@atjson/renderer-hir": "0.21.12",
     "@atjson/renderer-html": "0.23.3",
