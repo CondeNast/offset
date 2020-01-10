@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
 import { HIR, HIRNode } from "@atjson/hir";
-import Document from "@atjson/document";
+import Document, { Annotation } from "@atjson/document";
 import styled from "styled-components";
 import FormattingSource from "../Markup/source";
 import ReactRenderer from "@atjson/renderer-react";
@@ -46,6 +46,10 @@ const Style = styled.div`
     &:hover {
       background: ${props => props.theme.tab.active.background};
     }
+
+    &[aria-selected="true"] {
+      background: #1a73e8;
+    }
   }
 `;
 
@@ -53,9 +57,11 @@ export const Node: FC<{
   children: HIRNode;
   depth: number;
   showFormattingMarks: boolean;
+  highlightedAnnotation: Annotation<any> | null;
 }> = props => {
   return (
     <div
+      aria-selected={props.highlightedAnnotation?.id === props.children.id}
       style={{
         paddingLeft: `${props.depth + 0.5}rem`
       }}
@@ -87,6 +93,7 @@ export const Tree: FC<{
   children: Document;
   showParseTokens: boolean;
   showFormattingMarks: boolean;
+  highlightedAnnotation: Annotation<any> | null;
 }> = props => {
   let children = hirToList(
     new HIR(props.children).rootNode,
@@ -95,7 +102,11 @@ export const Tree: FC<{
   return (
     <Style>
       {children.map(({ node, depth }) => (
-        <Node depth={depth} showFormattingMarks={props.showFormattingMarks}>
+        <Node
+          depth={depth}
+          highlightedAnnotation={props.highlightedAnnotation}
+          showFormattingMarks={props.showFormattingMarks}
+        >
           {node}
         </Node>
       ))}

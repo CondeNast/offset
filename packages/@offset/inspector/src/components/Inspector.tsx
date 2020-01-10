@@ -199,6 +199,7 @@ export const Inspector: FC<{
               <RichPreview>{props.children}</RichPreview>
             ) : tab === "Tree" ? (
               <Tree
+                highlightedAnnotation={annotation}
                 showFormattingMarks={showFormattingMarks}
                 showParseTokens={showParseTokens}
               >
