@@ -2,7 +2,7 @@ import * as React from "react";
 import { FC } from "react";
 import Document, { AttributesOf } from "@atjson/document";
 import * as schema from "@atjson/offset-annotations";
-import ReactRenderer from "@atjson/renderer-react";
+import ReactRenderer, { ReactRendererProvider } from "@atjson/renderer-react";
 import styled from "styled-components";
 
 const Blockquote = styled.blockquote<AttributesOf<schema.Blockquote>>`
@@ -102,8 +102,8 @@ const Story = styled.div`
 export const RichPreview: FC<{ children: Document }> = props => {
   return (
     <Story>
-      <article>
-        {ReactRenderer.render(props.children, {
+      <ReactRendererProvider
+        value={{
           Blockquote,
           Bold,
           Code,
@@ -116,8 +116,10 @@ export const RichPreview: FC<{ children: Document }> = props => {
           ListItem,
           Paragraph,
           Underline
-        })}
-      </article>
+        }}
+      >
+        <article>{ReactRenderer.render(props.children)}</article>
+      </ReactRendererProvider>
     </Story>
   );
 };

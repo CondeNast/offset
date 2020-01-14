@@ -1,4 +1,4 @@
-import ReactRenderer from "@atjson/renderer-react";
+import ReactRenderer, { ReactRendererProvider } from "@atjson/renderer-react";
 import * as React from "react";
 import { FC, useMemo, useEffect, useRef } from "react";
 import FormattingSource from "./source";
@@ -87,22 +87,24 @@ export const Markup: FC<{
   let content = useMemo(() => {
     if (renderer) {
       let markup = renderer.render(props.children);
-      return ReactRenderer.render(FormattingSource.fromRaw(markup), {
-        CarriageReturn,
-        ParseToken,
-        AnnotationMarker,
-        WhiteSpace
-      });
+      return (
+        <ReactRendererProvider
+          value={{ CarriageReturn, ParseToken, AnnotationMarker, WhiteSpace }}
+        >
+          {ReactRenderer.render(FormattingSource.fromRaw(markup))}
+        </ReactRendererProvider>
+      );
     } else {
-      return ReactRenderer.render(
-        FormattingSource.fromRaw(props.children.content, [
-          ...props.children.where({ type: "-atjson-parse-token" })
-        ]),
-        {
-          CarriageReturn,
-          ParseToken,
-          WhiteSpace
-        }
+      return (
+        <ReactRendererProvider
+          value={{ CarriageReturn, ParseToken, WhiteSpace }}
+        >
+          {ReactRenderer.render(
+            FormattingSource.fromRaw(props.children.content, [
+              ...props.children.where({ type: "-atjson-parse-token" })
+            ])
+          )}
+        </ReactRendererProvider>
       );
     }
   }, [props.children, renderer]);

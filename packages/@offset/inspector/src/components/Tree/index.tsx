@@ -4,7 +4,7 @@ import { HIR, HIRNode } from "@atjson/hir";
 import Document, { Annotation } from "@atjson/document";
 import styled from "styled-components";
 import FormattingSource from "../Markup/source";
-import ReactRenderer from "@atjson/renderer-react";
+import ReactRenderer, { ReactRendererProvider } from "@atjson/renderer-react";
 
 const WhiteSpace = styled.span`
   position: relative;
@@ -66,17 +66,19 @@ export const Node: FC<{
         paddingLeft: `${props.depth + 0.5}rem`
       }}
     >
-      {props.children.type === "text"
-        ? props.showFormattingMarks
-          ? ReactRenderer.render(
-              FormattingSource.fromRaw(props.children.text),
-              {
-                WhiteSpace,
-                CarriageReturn
-              }
-            )
-          : props.children.text
-        : props.children.type}
+      {props.children.type === "text" ? (
+        props.showFormattingMarks ? (
+          <ReactRendererProvider value={{ WhiteSpace, CarriageReturn }}>
+            {ReactRenderer.render(
+              FormattingSource.fromRaw(props.children.text)
+            )}
+          </ReactRendererProvider>
+        ) : (
+          props.children.text
+        )
+      ) : (
+        props.children.type
+      )}
     </div>
   );
 };
