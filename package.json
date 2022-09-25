@@ -6,7 +6,7 @@
     "@types/jest": "24.0.20",
     "husky": "3.0.9",
     "jest": "24.9.0",
-    "lerna": "3.18.3",
+    "lerna": "3.22.1",
     "lint-staged": "9.4.2",
     "parcel-bundler": "1.12.4",
     "prettier": "1.18.2",
