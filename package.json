@@ -3,7 +3,7 @@
   "name": "offset",
   "devDependencies": {
     "@atjson/document": "0.22.3",
-    "@types/jest": "24.0.20",
+    "@types/jest": "29.5.12",
     "husky": "3.0.9",
     "jest": "24.9.0",
     "lerna": "3.18.3",
